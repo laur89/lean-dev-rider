@@ -2,8 +2,11 @@ FROM  layr/lean-dev:latest
 MAINTAINER Laur
 
 ARG TMPDIR=/tmp
-ARG RIDER_VER=${RIDER_VER:-"2019.2.3"}
-ARG RIDER_MINOR_VER=${RIDER_MINOR_VER:-2}
+
+ARG RIDER_VER
+ENV RIDER_VER=${RIDER_VER:-"2019.2.3"}
+ARG RIDER_MINOR_VER
+ENV RIDER_MINOR_VER=${RIDER_MINOR_VER:-2}
 
 # rider setup
 #   https://www.jetbrains.com/rider/download/other.html

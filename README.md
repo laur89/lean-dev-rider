@@ -1,5 +1,7 @@
-# lean-dev
+# lean-dev-rider
 
+Packages Intellij Rider into its [lean-dev](https://github.com/laur89/Lean-dev)
+base-image.
 Any commit on this repo also causes docker build to be triggered.
 
 ## Usage
@@ -39,8 +41,8 @@ Note this setup is taken from [here](https://towardsdatascience.com/real-time-an
 
 - `export XAUTH=$HOME/.docker.xauth`
   - note this step needs to be done upon every reboot
-- touch $XAUTH
-- xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
+- `touch $XAUTH`
+- `xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -`
 
 Example of `docker-compse` to go with it:
 
@@ -62,4 +64,35 @@ Example of `docker-compse` to go with it:
           - /tmp/.X11-unix:/tmp/.X11-unix
           - $XAUTH:$XAUTH
         tty: true
+
+You can also build this image yourself, eg if you need specific version of Rider:
+
+    services:
+      dev:
+        build:
+          context: ./lean-dev-rider
+          args:
+            RIDER_VER: $RIDER_VER
+            RIDER_MINOR_VER: $RIDER_MINOR_VER
+        working_dir: $SRC_MOUNT
+        container_name: lean-dev
+        environment:
+          - HOST_USER_ID=$UID
+          - HOST_GROUP_ID=$GID
+          - SRC_MOUNT=$SRC_MOUNT
+          - DISPLAY
+          - XAUTHORITY=$XAUTH
+        ports:
+          - "2223:22"
+        volumes:
+          - ./:${SRC_MOUNT}:cached
+          - /tmp/.X11-unix:/tmp/.X11-unix
+          - $XAUTH:$XAUTH
+        tty: true
+
+Note in this case following env vars are to be provided either by `.env` file
+or manually defined in docker-compose:
+  - `SRC_MOUNT`
+  - `RIDER_VER`  (eg "2019.2.3")
+  - `RIDER_MINOR_VER`  (eg "2")
 
