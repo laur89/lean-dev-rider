@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# non-blocking rider launcher
+###########################################################
+rider-launcher &
+disown $!
+
+exit 0

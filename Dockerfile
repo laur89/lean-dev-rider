@@ -13,6 +13,7 @@ ENV RIDER_MINOR_VER=${RIDER_MINOR_VER:-2}
 #   eg https://download.jetbrains.com/rider/.tar.gz
 ARG RIDER_FULL_VER=${RIDER_FULL_VER:-"JetBrains.Rider-$RIDER_VER"}
 ARG RIDER_PRODUCT_NAME=${RIDER_PRODUCT_NAME:-Rider2019}
+ADD rider /usr/local/bin
 
 ## -- derived vars ---
 ENV RIDER_INSTALL_DIR="${HOME}/${RIDER_PRODUCT_NAME}.${RIDER_MINOR_VER}"
@@ -29,7 +30,7 @@ RUN mkdir -p \
     wget --directory-prefix=$TMPDIR https://download.jetbrains.com/rider/${RIDER_IDE_TAR} && \
     tar -xvf $TMPDIR/${RIDER_IDE_TAR} -C ${RIDER_INSTALL_DIR} --strip-components=1 && \
     rm -- $TMPDIR/${RIDER_IDE_TAR} && \
-    ln -s "${RIDER_INSTALL_DIR}/bin/rider.sh" /usr/local/bin/rider
+    ln -s "${RIDER_INSTALL_DIR}/bin/rider.sh" /usr/local/bin/rider-launcher
 
 VOLUME ${RIDER_PROJECT_DIR}
 VOLUME ${RIDER_CONFIG_DIR}
