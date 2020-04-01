@@ -4,15 +4,16 @@ MAINTAINER Laur
 ARG TMPDIR=/tmp
 
 ARG RIDER_VER
-ENV RIDER_VER=${RIDER_VER:-"2019.2.3"}
+ENV RIDER_VER=${RIDER_VER:-"2019.3.4"}
 ARG RIDER_MINOR_VER
-ENV RIDER_MINOR_VER=${RIDER_MINOR_VER:-2}
+ENV RIDER_MINOR_VER=${RIDER_MINOR_VER:-3}
+ARG RIDER_PRODUCT_NAME
+ENV RIDER_PRODUCT_NAME=${RIDER_PRODUCT_NAME:-"Rider2019"}
 
 # rider setup
 #   https://www.jetbrains.com/rider/download/other.html
 #   eg https://download.jetbrains.com/rider/.tar.gz
 ARG RIDER_FULL_VER=${RIDER_FULL_VER:-"JetBrains.Rider-$RIDER_VER"}
-ARG RIDER_PRODUCT_NAME=${RIDER_PRODUCT_NAME:-Rider2019}
 ADD rider /usr/local/bin
 
 ## -- derived vars ---
