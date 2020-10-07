@@ -23,15 +23,18 @@ ENV RIDER_CONFIG_DIR="${HOME}/.Rider${RIDER_MAJOR_VER}.${RIDER_MINOR_VER}"
 ENV RIDER_PROJECT_DIR="${HOME}/RiderProjects"
 ARG RIDER_IDE_TAR=${RIDER_FULL_VER}.tar.gz
 
+ENV RIDER_CONF_DIR_REAL="/rider-config-${RIDER_MAJOR_VER}-${RIDER_MINOR_VER}"
+ENV RIDER_PROJECT_DIR_REAL="/rider-projects "
 
 RUN mkdir -p \
         ${RIDER_INSTALL_DIR} \
-        ${RIDER_CONFIG_DIR} \
-        ${RIDER_PROJECT_DIR} && \
+        ${RIDER_CONF_DIR_REAL} \
+        ${RIDER_PROJECT_DIR_REAL} && \
+        ln -s "$RIDER_CONF_DIR_REAL" "$RIDER_CONFIG_DIR" && \
+        ln -s "$RIDER_PROJECT_DIR_REAL" "$RIDER_PROJECT_DIR" && \
     wget --directory-prefix=$TMPDIR https://download.jetbrains.com/rider/${RIDER_IDE_TAR} && \
     tar -xvf $TMPDIR/${RIDER_IDE_TAR} -C ${RIDER_INSTALL_DIR} --strip-components=1 && \
     rm -- $TMPDIR/${RIDER_IDE_TAR} && \
     ln -s "${RIDER_INSTALL_DIR}/bin/rider.sh" /usr/local/bin/rider-launcher
 
-VOLUME ${RIDER_PROJECT_DIR}
-VOLUME ${RIDER_CONFIG_DIR}
+VOLUME ["$RIDER_CONF_DIR_REAL", "$RIDER_PROJECT_DIR_REAL"]

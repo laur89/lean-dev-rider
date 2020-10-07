@@ -72,8 +72,9 @@ You can also build this image yourself, eg if you need specific version of Rider
         build:
           context: ./lean-dev-rider
           args:
-            RIDER_VER: $RIDER_VER
+            RIDER_MAJOR_VER: $RIDER_MAJOR_VER
             RIDER_MINOR_VER: $RIDER_MINOR_VER
+            RIDER_PATCH_VER: $RIDER_PATCH_VER
         working_dir: $SRC_MOUNT
         container_name: lean-dev
         environment:
@@ -93,6 +94,7 @@ You can also build this image yourself, eg if you need specific version of Rider
 Note in this case following env vars are to be provided either by `.env` file
 or manually defined in docker-compose:
   - `SRC_MOUNT`
-  - `RIDER_VER`  (eg "2019.2.3")
+  - `RIDER_MAJOR_VER`  (eg "2020")
   - `RIDER_MINOR_VER`  (eg "2")
+  - `RIDER_PATCH_VER`  (eg "4")
 
