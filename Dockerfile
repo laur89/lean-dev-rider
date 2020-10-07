@@ -19,7 +19,7 @@ ADD rider /usr/local/bin
 ## -- derived vars ---
 ENV RIDER_INSTALL_DIR="${HOME}/Rider${RIDER_MAJOR_VER}.${RIDER_MINOR_VER}"
 # note confdir can be found in tarball/Install-Linux-tar.txt:
-ENV RIDER_CONFIG_DIR="${HOME}/.Rider${RIDER_MAJOR_VER}.${RIDER_MINOR_VER}"
+ENV RIDER_CONFIG_DIR="${HOME}/.config/JetBrains/Rider${RIDER_MAJOR_VER}.${RIDER_MINOR_VER}"
 ENV RIDER_PROJECT_DIR="${HOME}/RiderProjects"
 
 ENV RIDER_CONF_DIR_REAL="/rider-config-${RIDER_MAJOR_VER}-${RIDER_MINOR_VER}"
@@ -29,8 +29,9 @@ RUN mkdir -p \
         ${RIDER_INSTALL_DIR} \
         ${RIDER_CONF_DIR_REAL} \
         ${RIDER_PROJECT_DIR_REAL} && \
-        ln -s "$RIDER_CONF_DIR_REAL" "$RIDER_CONFIG_DIR" && \
-        ln -s "$RIDER_PROJECT_DIR_REAL" "$RIDER_PROJECT_DIR" && \
+    ln -s "$RIDER_CONF_DIR_REAL" "$RIDER_CONFIG_DIR" && \
+    ln -s "$RIDER_PROJECT_DIR_REAL" "$RIDER_PROJECT_DIR" && \
+    chown -R "$USERNAME": "$RIDER_CONF_DIR_REAL" "$RIDER_PROJECT_DIR_REAL" && \
     wget --directory-prefix=/tmp https://download.jetbrains.com/rider/${RIDER_IDE_TAR} && \
     tar -xvf /tmp/${RIDER_IDE_TAR} -C ${RIDER_INSTALL_DIR} --strip-components=1 && \
     rm -- /tmp/${RIDER_IDE_TAR} && \
