@@ -26,11 +26,12 @@ ENV RIDER_CONF_DIR_REAL="/rider-config-${RIDER_MAJOR_VER}-${RIDER_MINOR_VER}"
 ENV RIDER_PROJECT_DIR_REAL="/rider-projects"
 
 RUN mkdir -p \
+        "$RIDER_CONFIG_DIR" \
         ${RIDER_INSTALL_DIR} \
         ${RIDER_CONF_DIR_REAL} \
         ${RIDER_PROJECT_DIR_REAL} && \
-    ln -s "$RIDER_CONF_DIR_REAL" "$RIDER_CONFIG_DIR" && \
-    ln -s "$RIDER_PROJECT_DIR_REAL" "$RIDER_PROJECT_DIR" && \
+    ln --force -s "$RIDER_CONF_DIR_REAL" "$RIDER_CONFIG_DIR" && \
+    ln --force -s "$RIDER_PROJECT_DIR_REAL" "$RIDER_PROJECT_DIR" && \
     chown -R "$USERNAME": "$RIDER_CONF_DIR_REAL" "$RIDER_PROJECT_DIR_REAL" && \
     wget --directory-prefix=/tmp https://download.jetbrains.com/rider/${RIDER_IDE_TAR} && \
     tar -xvf /tmp/${RIDER_IDE_TAR} -C ${RIDER_INSTALL_DIR} --strip-components=1 && \
