@@ -26,7 +26,7 @@ ENV RIDER_CONF_DIR_REAL="/rider-config-${RIDER_MAJOR_VER}-${RIDER_MINOR_VER}"
 ENV RIDER_PROJECT_DIR_REAL="/rider-projects"
 
 RUN mkdir -p \
-        "$RIDER_CONFIG_DIR" \
+        "$(dirname "$RIDER_CONFIG_DIR")" \
         ${RIDER_INSTALL_DIR} \
         ${RIDER_CONF_DIR_REAL} \
         ${RIDER_PROJECT_DIR_REAL} && \
